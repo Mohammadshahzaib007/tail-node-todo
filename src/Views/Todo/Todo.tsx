@@ -25,12 +25,22 @@ function Todo() {
 
   // searching logic
   useEffect(() => {
-    let fT = todos?.filter((todo) => {
-      return tags.map((tag) => todo.title.includes(tag));
+    if (tags.length === 0) {
+      getTodosFromLocalStorage();
+      return;
+    }
+    let ft: TodoType[] = [];
+
+    todos?.forEach((todo) => {
+      tags.forEach((tag) => {
+        if (todo.title.includes(tag)) {
+          ft.push(todo);
+        }
+      });
     });
 
-    console.log(fT);
-  }, [tags, todos]);
+    setTodos(ft);
+  }, [tags]);
 
   // get todos from local storage
   const getTodosFromLocalStorage = () => {
@@ -46,7 +56,6 @@ function Todo() {
 
   // saving todos in the local storage
   const saveTodoToLocalStorage = (todo: TodoType) => {
-    console.log(todo);
     const storedTodos: TodoType[] | null = JSON.parse(
       localStorage.getItem("todos")!
     );
