@@ -1,10 +1,11 @@
 import { Card, Typography, Box, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import React from "react";
 
 import { useTodoCardStyles } from "./styles";
 
 export type TodoCardPropTypes = {
-  title: string;
+  title: string | React.ReactNode;
   completed: boolean;
   deleteTodo: () => void;
   markTodoAsCompletedHandler: () => void;
