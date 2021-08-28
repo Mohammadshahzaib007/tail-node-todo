@@ -23,7 +23,7 @@ function Tag(props: PropTypes) {
       width="fit-content"
       bgcolor="#EDE8FB"
       color={theme.palette.primary.main}
-      padding="5px 8px"
+      padding="3px 8px"
       style={{ cursor: "pointer" }}
       mx="8px"
     >

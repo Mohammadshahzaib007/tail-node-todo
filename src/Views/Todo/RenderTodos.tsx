@@ -12,17 +12,21 @@ type PropTypes = {
 function RenderTodos(props: PropTypes) {
   const { todos, deleteTodo, markTodoAsCompletedHandler } = props;
 
-  
-
-  
-  const HASHTAG_FORMATTER = (string:string) => {
-    return string.split(/((?:^|\s)(?:#[a-z\d-]+))/gi).filter(Boolean).map((v,i)=>{
-      if(v.includes('#')){
-        return <Tag key={i} onTagClick={() => alert(v)}>{v}</Tag>
-      }   else{
-        return <span key={i}>{v}</span>
-      }
-    })
+  const HASHTAG_FORMATTER = (string: string) => {
+    return string
+      .split(/((?:^|\s)(?:#[a-z\d-]+))/gi)
+      .filter(Boolean)
+      .map((v, i) => {
+        if (v.includes("#")) {
+          return (
+            <Tag key={i} onTagClick={() => alert(v)}>
+              {v}
+            </Tag>
+          );
+        } else {
+          return <span key={i}>{v}</span>;
+        }
+      });
   };
 
   return (
