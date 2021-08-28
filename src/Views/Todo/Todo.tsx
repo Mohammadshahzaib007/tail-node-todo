@@ -108,6 +108,12 @@ function Todo() {
     getTodosFromLocalStorage();
   };
 
+  // remove tags from the header
+  const removeTagHandler = (index?: number) => {
+    const remainingTags = tags.filter((tag, i) => i !== index);
+    setTags(remainingTags);
+  };
+
   return (
     <section className={classes.section}>
       <Container>
@@ -120,7 +126,9 @@ function Todo() {
             text={text}
           />
 
-          {tags.length > 0 && <RenderTags tags={tags} onTagClick={() => {}} />}
+          {tags.length > 0 && (
+            <RenderTags tags={tags} onTagClick={removeTagHandler} />
+          )}
 
           <RenderTodos
             setTags={setTags}

@@ -3,7 +3,7 @@ import Tag from "../Tag/Tag";
 
 type PropTypes = {
   tags: string[];
-  onTagClick: () => void;
+  onTagClick: (index?: number) => void;
 };
 
 function RenderTags(props: PropTypes) {
@@ -17,7 +17,7 @@ function RenderTags(props: PropTypes) {
       mb="1.5rem"
     >
       {tags.map((tag, i) => (
-        <Tag key={i} children={tag} onTagClick={onTagClick} />
+        <Tag key={i} children={tag} onTagClick={() => onTagClick(i)} />
       ))}
     </Box>
   );
