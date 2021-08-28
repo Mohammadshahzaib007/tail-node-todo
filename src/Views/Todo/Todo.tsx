@@ -7,6 +7,7 @@ import { useTodoStyles } from "./styles";
 import TodoHeader from "./TodoHeader";
 import { TodoType } from "../../types/type";
 import RenderTodos from "./RenderTodos";
+import RenderTags from "../../components/RenderTags/RenderTags";
 
 function Todo() {
   const classes = useTodoStyles();
@@ -14,6 +15,8 @@ function Todo() {
   const [text, setText] = useState("");
   const [errors, setErrors] = useState<{ msg: string }>({ msg: "" });
   const [todos, setTodos] = useState<TodoType[] | null>([]);
+
+  const [tags, setTags] = useState<string[]>([]);
 
   // get todos on first mount
   useEffect(() => {
@@ -116,7 +119,11 @@ function Todo() {
             setText={setText}
             text={text}
           />
+
+          {tags.length > 0 && <RenderTags tags={tags} onTagClick={() => {}} />}
+
           <RenderTodos
+            setTags={setTags}
             todos={todos!.filter((todo) => todo.completed !== true)}
             deleteTodo={deleteTodo}
             markTodoAsCompletedHandler={markTodoAsCompletedHandler}
@@ -125,6 +132,7 @@ function Todo() {
             Completed
           </Typography>
           <RenderTodos
+            setTags={setTags}
             todos={todos!.filter((todo) => todo.completed === true)}
             deleteTodo={deleteTodo}
             markTodoAsCompletedHandler={markTodoAsCompletedHandler}
