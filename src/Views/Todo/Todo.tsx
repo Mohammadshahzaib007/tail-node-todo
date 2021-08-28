@@ -23,6 +23,15 @@ function Todo() {
     getTodosFromLocalStorage();
   }, []);
 
+  // searching logic
+  useEffect(() => {
+    let fT = todos?.filter((todo) => {
+      return tags.map((tag) => todo.title.includes(tag));
+    });
+
+    console.log(fT);
+  }, [tags, todos]);
+
   // get todos from local storage
   const getTodosFromLocalStorage = () => {
     const storedTodos: TodoType[] | null = JSON.parse(
@@ -30,6 +39,8 @@ function Todo() {
     );
     if (storedTodos !== null) {
       setTodos(storedTodos);
+    } else {
+      setTodos([]);
     }
   };
 
@@ -114,12 +125,19 @@ function Todo() {
     setTags(remainingTags);
   };
 
+  // Delete all the todos
+  const deleteAllTodos = () => {
+    localStorage.removeItem("todos");
+    getTodosFromLocalStorage();
+  };
+
   return (
     <section className={classes.section}>
       <Container>
         <Paper elevation={0}>
           <TodoHeader
             addTodoHandler={addTodoHandler}
+            deleteAllTodos={deleteAllTodos}
             setErrors={setErrors}
             errors={errors}
             setText={setText}
@@ -129,22 +147,34 @@ function Todo() {
           {tags.length > 0 && (
             <RenderTags tags={tags} onTagClick={removeTagHandler} />
           )}
+          {/* Uncompleted todos */}
+          {todos!.filter((todo) => todo.completed !== true).length > 0 ? (
+            <RenderTodos
+              setTags={setTags}
+              todos={todos!.filter((todo) => todo.completed !== true)}
+              deleteTodo={deleteTodo}
+              markTodoAsCompletedHandler={markTodoAsCompletedHandler}
+            />
+          ) : (
+            <Typography variant="h6" color="secondary" align="center">
+              You don't have a pending todos 😎
+            </Typography>
+          )}
 
-          <RenderTodos
-            setTags={setTags}
-            todos={todos!.filter((todo) => todo.completed !== true)}
-            deleteTodo={deleteTodo}
-            markTodoAsCompletedHandler={markTodoAsCompletedHandler}
-          />
-          <Typography variant="h5" color="textSecondary">
-            Completed
-          </Typography>
-          <RenderTodos
-            setTags={setTags}
-            todos={todos!.filter((todo) => todo.completed === true)}
-            deleteTodo={deleteTodo}
-            markTodoAsCompletedHandler={markTodoAsCompletedHandler}
-          />
+          {/* Completed Todos */}
+          {todos!.filter((todo) => todo.completed === true).length > 0 && (
+            <>
+              <Typography variant="h5" color="textSecondary">
+                Completed
+              </Typography>
+              <RenderTodos
+                setTags={setTags}
+                todos={todos!.filter((todo) => todo.completed === true)}
+                deleteTodo={deleteTodo}
+                markTodoAsCompletedHandler={markTodoAsCompletedHandler}
+              />
+            </>
+          )}
         </Paper>
       </Container>
     </section>

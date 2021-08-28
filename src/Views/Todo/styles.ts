@@ -28,5 +28,9 @@ export const useTodoStyles = makeStyles((theme) => ({
       color: theme.palette.primary.main,
       opacity: 1,
     },
+
+    "& h6": {
+      margin: "30px 0px",
+    },
   },
 }));

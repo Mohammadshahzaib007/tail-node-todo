@@ -17,15 +17,19 @@ type PropTypes = {
       msg: string;
     }>
   >;
+  deleteAllTodos: () => void;
 };
 
 function TodoHeader(props: PropTypes) {
-  const { addTodoHandler, errors, setText, text, setErrors } = props;
+  const { addTodoHandler, errors, setText, text, setErrors, deleteAllTodos } =
+    props;
   return (
     <>
       <Typography variant="h5">To do list</Typography>
       <Box width="100%" display="flex" justifyContent="flex-end">
-        <MyButton startIcon={<RefreshIcon />}>Reset all tasks</MyButton>
+        <MyButton onClick={deleteAllTodos} startIcon={<RefreshIcon />}>
+          Reset all tasks
+        </MyButton>
       </Box>
       <form onSubmit={addTodoHandler}>
         <TextField
